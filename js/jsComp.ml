@@ -53,6 +53,7 @@ let stderr = (fun c -> ())
 let stdout = (fun c -> ())
 let print_string = output_string stdout
 let print_char = output_char stdout
+let print_newline () = output_char stdout '\n'
 module Printf = struct
   include Printf
     
