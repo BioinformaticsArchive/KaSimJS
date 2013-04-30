@@ -35,7 +35,7 @@ let _ =
 
 type file_changed = 
   {
-    callback: string -> unit;
+    callback: char -> unit;
     mutable next_pos: int (* the next position to give *)
   }
 let output_callbacks : (string, file_changed) Hashtbl.t = Hashtbl.create 10
@@ -44,13 +44,12 @@ let update_changed_callback file_changed file =
   let n = file##length in
   let next_pos = file_changed.next_pos in
   let len = n - next_pos in
-  let buf = String.create (n - next_pos) in 
+  let f = file_changed.callback in
   for i = 0 to len - 1 do
     Js.Optdef.case (Js.array_get file (i + next_pos)) 
       (fun () -> assert false)
-      (fun c -> buf.[i] <- c)
+      f
   done;
-  file_changed.callback buf;
   file_changed.next_pos <- n
  
 
@@ -59,7 +58,30 @@ let add_callback name f =
   Hashtbl.add output_callbacks name fc;
   if (file_exists name) then
     update_changed_callback fc (Hashtbl.find file_system name)
-  
+
+(* line callback sets up a call_back called on each line*)
+let line_callback name (f : string -> unit) =
+  let line =  jsnew Js.array_empty() in
+  let callback (c : char) =
+    if (c == '\n') then
+      begin
+	let len = line##length in
+	let buf = String.create len in
+	for i = 0 to len - 1 do
+	  Js.Optdef.case (Js.array_get line i) 
+	    (fun () -> assert false)
+	    (fun c -> buf.[i] <- c)
+	done;
+	line##length <- 0; (* clear the line buffer*)
+	f buf 
+      end
+    else
+      ignore(line##push(c))
+  in
+  add_callback name callback
+
+(*let _ = line_callback "output" (fun s -> log (Js.string s))*)
+	  
 (*
 let _ =  (Js.Unsafe.variable "caml_callbacks")##add_callback_ <- 
   Js.wrap_callback (fun s f -> 
