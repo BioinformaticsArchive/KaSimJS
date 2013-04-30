@@ -46,7 +46,7 @@ end
 let argv = ref [||]
 
 let _ = 
-  argv := [|"kasimJS" ; "-i"; "input" ; "-e"; "100" ; "-p" ;"10" ; "-o"; "output"; "--debug" |]
+  argv := [|"kasimJS" ; "-i"; "input" ; "-e"; "100000" ; "-p" ;"5000" ; "-o"; "output" |]
 
 module Arg = struct 
   include Arg

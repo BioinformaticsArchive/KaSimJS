@@ -23,17 +23,55 @@ let create_empty_file name =
   Hashtbl.replace file_system  name a;
   a
 	
-  
+
+let file_exists s =
+  Hashtbl.mem file_system s  
 
 let _ = 
   ignore(create_empty_file "stdin")
  
 (* alist of function to call when writing into a file, 
   with the name of the file being writen *)
-let output_callbacks : (string * (unit -> unit)) list ref = ref [] 
 
-let file_exists s =
-  Hashtbl.mem file_system s
+type file_changed = 
+  {
+    callback: string -> unit;
+    mutable next_pos: int (* the next position to give *)
+  }
+let output_callbacks : (string, file_changed) Hashtbl.t = Hashtbl.create 10
+
+let update_changed_callback file_changed file =
+  let n = file##length in
+  let next_pos = file_changed.next_pos in
+  let len = n - next_pos in
+  let buf = String.create (n - next_pos) in 
+  for i = 0 to len - 1 do
+    Js.Optdef.case (Js.array_get file (i + next_pos)) 
+      (fun () -> assert false)
+      (fun c -> buf.[i] <- c)
+  done;
+  file_changed.callback buf;
+  file_changed.next_pos <- n
+ 
+
+let add_callback name f = 
+  let fc = {callback = f; next_pos = 0} in
+  Hashtbl.add output_callbacks name fc;
+  if (file_exists name) then
+    update_changed_callback fc (Hashtbl.find file_system name)
+  
+(*
+let _ =  (Js.Unsafe.variable "caml_callbacks")##add_callback_ <- 
+  Js.wrap_callback (fun s f -> 
+    add_callback (Js.to_string s) (fun x -> f (Js.string x)))
+*)
+
+let file_changed_all  name =
+  if file_exists name then
+    let file = Hashtbl.find file_system name in
+    List.iter (fun fc -> update_changed_callback fc file)
+      (Hashtbl.find_all  output_callbacks name)
+
 
 let _ =   (Js.Unsafe.variable "caml_callbacks")##caml_sys_file_exists_ <- file_exists
  
@@ -49,15 +87,18 @@ let open_file_in_out name  =
   next_channel := i + 1;
   Hashtbl.add channel_system i 
   (let pos = ref 0 in
+   let flush () = 
+       file_changed_all name in
    { inchannel = 
        (fun () -> 
 	 let thePos = !pos in 
 	 let c = Js.array_get file thePos in
 	 pos := thePos + 1;
 	 Js.Optdef.case c (fun () -> None) (fun x -> Some x));
-   outchannel =   ((fun c -> ignore(file##push(c))), (fun () ->
-       List.iter
-	 (fun (s,f) -> if s = name then  f())  (!output_callbacks) ))});
+   outchannel =   (
+     (fun c -> 
+       ignore(file##push(c));
+       if (c == '\n') then flush()), flush)});
   i
     
 let _ = ignore(open_file_in_out "stdin")
@@ -159,7 +200,6 @@ let string_of_char c =
   (Js.string s)
 
 let caml_ml_input ch s off len =
-  alert (len);
   let c = ref 0 in
   for i = off to off + len - 1 do
     match ch.inchannel () with 
