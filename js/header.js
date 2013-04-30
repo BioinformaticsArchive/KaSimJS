@@ -1,1 +1,2 @@
-var caml_callbacks = {}
+
+var caml_callbacks = {};
