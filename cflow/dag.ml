@@ -171,10 +171,10 @@ module Dag =
         match x,y with 
           | Stop,Stop -> 0 
           | Stop,_ -> -1 
-          | _,Stop -> +1
+          | _,Stop -> 1
           | Former i, Former j -> compare i j 
           | Former _,_ -> -1
-          | _,Former _ -> +1
+          | _,Former _ -> 1
           | Fresh s,Fresh s' -> compare s s'
 
       let quick_compare g t1 t2 = compare_elt (g t1) (g t2)
@@ -184,7 +184,7 @@ module Dag =
         with 
           | [],[] -> 0 
           | [], _ -> -1 
-          | _ ,[] -> +1 
+          | _ ,[] -> 1 
           | t::q,t'::q' -> 
             let cmp = compare_elt t t' in 
             if cmp = 0 
@@ -197,7 +197,7 @@ module Dag =
         with 
           | None,None -> 0 
           | None,_ -> -1
-          | _,None -> +1
+          | _,None -> 1
           |Some x,Some y -> compare_canonic x y 
         
       let compare_prehash = aux compare 

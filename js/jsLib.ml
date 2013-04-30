@@ -5,6 +5,8 @@
    out_channels are function from char to unit to write and from unit -> unit to flush.
 *)
 
+let alert s =  (Js.Unsafe.variable "window")##alert(s)
+let log s = (Js.Unsafe.variable "console")##log(s)
 
 type channels = 
  {inchannel :  (unit -> char option);
@@ -30,7 +32,8 @@ let _ =
   with the name of the file being writen *)
 let output_callbacks : (string * (unit -> unit)) list ref = ref [] 
 
-let file_exists s =  Hashtbl.mem file_system s
+let file_exists s =
+  Hashtbl.mem file_system s
 
 let _ =   (Js.Unsafe.variable "caml_callbacks")##caml_sys_file_exists_ <- file_exists
  
@@ -77,13 +80,13 @@ let _ =
 
 
 let caml_ml_open_descriptor_out (i : int) =
-  (Hashtbl.find channel_system i).outchannel
+  (Hashtbl.find channel_system i)
 
 let _ = (Js.Unsafe.variable "caml_callbacks")##caml_ml_open_descriptor_out_ <- caml_ml_open_descriptor_out
 
 
 let caml_ml_open_descriptor_in (i : int) =
-  (Hashtbl.find channel_system i).inchannel
+  (Hashtbl.find channel_system i)
 
 
 
@@ -102,23 +105,23 @@ let caml_sys_open (d : string) (l : open_flag list) (_ : int) =
   open_file_in_out d
 
   
-let alert s =  (Js.Unsafe.variable "window")##alert(s)
+
 
 let _ = (Js.Unsafe.variable "caml_callbacks")##caml_sys_open_ <- caml_sys_open
 
 let _ = (Js.Unsafe.variable "caml_callbacks")##caml_ml_flush_ <-
-  (fun x -> alert(x); (*f()*))
+  (fun (_,f) -> f())
 
 let _ = 
   (Js.Unsafe.variable "caml_callbacks")##caml_ml_out_channels_list_ <- 
     (fun () -> let l = ref [] in
 	       Hashtbl.iter 
 		 (fun _ ch ->
-		    l := ch.outchannel :: (!l) ) channel_system ;
+		    l := ch :: (!l) ) channel_system ;
 	        !l)
  
 let caml_ml_output_char  =
-  fun (s,_) c -> s c
+  fun ch c -> (fst ch.outchannel) c
 
 let caml_ml_output  = 
   fun ch s off len ->
@@ -137,24 +140,35 @@ let _ =
 
 let caml_ml_close_channel = 
   function
-  x -> (snd x.outchannel) ()
+  x -> snd x.outchannel ()
 
 let _ =   (Js.Unsafe.variable "caml_callbacks")##caml_ml_close_channel_ <- caml_ml_close_channel
 
 
 
-let caml_ml_input_char  ch = 
-  fun ch ->
-    match ch () with
-      Some x -> x
-    | None -> Char.chr 0
+let caml_ml_input_char  ch =
+  let res = 
+  match ch.inchannel () with
+    Some x -> x
+  | None -> Char.chr 0 in
+  res
+
+let string_of_char c = 
+  let s = " " in
+  s.[0] <- c;
+  (Js.string s)
 
 let caml_ml_input ch s off len =
+  alert (len);
+  let c = ref 0 in
   for i = off to off + len - 1 do
-    match ch () with 
-      Some(x) -> s.[i] <- x
+    match ch.inchannel () with 
+      Some(x) -> 
+	incr c; 
+	s.[i] <- x
     | None -> ()
-  done
+  done;
+  !c
 
     
 
@@ -183,29 +197,18 @@ let write_file_content name string =
     ignore(file##push(str.[i]))
   done
 
+let list_files () =
+  let a = jsnew Js.array_empty () in
+  Hashtbl.iter (fun x _ -> ignore(a##push(Js.string x))) file_system; 
+  a 
+
 let _ =  (Js.Unsafe.variable "caml_callbacks")##write_file_content_ <- write_file_content
+let _ =  (Js.Unsafe.variable "caml_callbacks")##list_files_ <- list_files
 
 
-let _ = Js.Unsafe.eval_string "caml_ml_open_descriptor_out = caml_callbacks.caml_ml_open_descriptor_out;
-caml_ml_open_descriptor_in = caml_callbacks.caml_ml_open_descriptor_in;
-caml_sys_is_directory = caml_callbacks.caml_sys_isdirectory;
-caml_sys_open = caml_callbacks.caml_sys_open;
-caml_ml_flush = caml_callbacks.caml_ml_flush;
-caml_ml_out_channels_list = caml_callbacks.caml_ml_out_channels_list;
-caml_ml_output_char = caml_callbacks.caml_ml_output_char;
-caml_ml_output = caml_callbacks.caml_ml_output;
-caml_ml_close_channel = caml_callbacks.caml_ml_close_channel;
-caml_sys_file_exists = caml_callbacks.caml_sys_file_exists;
-caml_ml_input_char = caml_callbacks.caml_ml_input_char;
-caml_ml_input = caml_callbacks.caml_ml_input;"
-
-let _ = write_file_content (Js.string "input") (Js.string "%agent: a(x~u~p)\n\
+let _ = write_file_content (Js.string "input") (Js.string "%agent: a()\n\
 %agent: b(y~u~p)\n\
 \n\
-a(x), b(y) -> a(x!1), b(y!1) @1\n\
-a(x!1), b(y!1) -> a(x), b(y) @1\n\
-a(x!1), b(y~u!1) -> a(x!1), b(y~p!1) @1\n\
+ -> a() @1\n\
 \n\
-%init: 100000 a(x~u)\n\
-%init: 200000 b(y~u)\n\
-%obs: 'a phos' b(y~u)" )
+%obs: 'a phos' a()" )

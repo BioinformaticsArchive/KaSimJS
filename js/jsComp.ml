@@ -21,58 +21,6 @@ module Sys = struct
 end
 let exit (i : int) =Sys.exit i
 
-(*type in_channel = string
-type out_channel = char -> unit
-
-let close_out (o : out_channel) = ()
-let open_out (s : string)  : out_channel = fun c -> ()
-let open_out_bin (s : string) : out_channel = fun c -> ()
-let open_in_bin (s : string) : in_channel = "   "
-
-let open_in (s : string) : in_channel = "empty"
-let close_in (i : in_channel) = ()
-let write_string (o : out_channel) (s : string) = s
-let output_char (d : out_channel) c : unit = d c
-let output_string (d : out_channel) s : unit = 
-  for i = 0 to String.length s - 1 do
-    output_char d s.[i]
-      done
-
-module Pervasives = struct 
-  let close_in = close_in
-end
-*)
-(*
-module Lexing = struct 
-  include Lexing
-  let from_channel (d : in_channel) = from_string d
-    
-end
-let stdin = (fun () -> 'y')
-let stderr = (fun c -> ())
-let stdout = (fun c -> ())
-
-
-let print_string = output_string stdout
-let print_char = output_char stdout
-let print_newline () = output_char stdout '\n'
-module Printf = struct
-  include Printf
-    
-  let fprintf (d : out_channel) f = ksprintf (output_string d) f
-  let eprintf f = fprintf stderr f
-end
-
-
-let flush (x : out_channel) = ()
-
-
-
-module Stream = struct
-  include Stream
-  let of_channel g = Stream.from (fun i -> Some(g ()))
-end
-*)
 module Marshal = struct 
   include Marshal
   let to_channel (type t) (d : out_channel) ( v : t) flags : unit =
@@ -94,10 +42,14 @@ module Printexc = struct
 end
 
 
-let argv = [||]
+
+let argv = ref [||]
+
+let _ = 
+  argv := [|"kasimJS" ; "-i"; "input" ; "-e"; "100" ; "-p" ;"10" ; "-o"; "output"; "--debug" |]
 
 module Arg = struct 
   include Arg
-  let parse = parse_argv argv
+  let parse = parse_argv !argv
   let usage a b  = output_string stderr (usage_string a b)
 end

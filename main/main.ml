@@ -17,7 +17,7 @@ let close_desc opt_env =
 		| None -> ()
 		| Some env -> Environment.close_desc env
 
-let main =
+let main  =
 	let options = [
 		("--version", Arg.Unit (fun () -> print_string (version_msg^"\n") ; flush stdout ; exit 0), "display KaSim version");
 		("-i", Arg.String (fun fic -> Parameter.inputKappaFileNames:= fic:: (!Parameter.inputKappaFileNames)),

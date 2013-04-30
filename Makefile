@@ -1,4 +1,4 @@
 jsLibs.js : 
 	ocamlbuild -use-ocamlfind js/jsLib.byte
-	js_of_ocaml _build/js/jsLib.byte
-	cp _build/js/jsLib.js .
+	js_of_ocaml -noruntime -pretty _build/js/jsLib.byte
+
