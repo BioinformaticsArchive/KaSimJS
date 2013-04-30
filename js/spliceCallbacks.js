@@ -1,0 +1,12 @@
+caml_ml_open_descriptor_out = caml_callbacks.caml_ml_open_descriptor_out
+caml_ml_open_descriptor_in = caml_callbacks.caml_ml_open_descriptor_in
+caml_sys_is_directory = caml_callbacks.caml_sys_isdirectory
+caml_sys_open = caml_callbacks.caml_sys_open
+caml_ml_flush = caml_callbacks.caml_ml_flush
+caml_ml_out_channels_list = caml_callbacks.caml_ml_out_channels_list
+caml_ml_output_char = caml_callbacks.caml_ml_output_char
+caml_ml_output = caml_callbacks.caml_ml_output
+caml_ml_close_channel = caml_callbacks.caml_ml_close_channel
+caml_sys_file_exists = caml_callbacks.caml_sys_file_exists
+caml_ml_input_char = caml_callbacks.caml_ml_input_char
+caml_ml_input = caml_callbacks.caml_ml_input

@@ -1,0 +1,1 @@
+var caml_callbacks = {}
