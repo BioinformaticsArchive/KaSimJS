@@ -1,3 +1,4 @@
+open JsComp
 module type OrderedType =
 sig
 	type t

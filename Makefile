@@ -2,7 +2,8 @@
 
 ## put here the names of your source files (in the right order)
 SOURCES = \
-		dataStructures/binomialtree.ml dataStructures/largeArray.ml dataStructures/memoryManagement.ml dataStructures/longString.ml dataStructures/heap.ml dataStructures/safeHeap.ml \
+		js/jsComp.ml\
+                dataStructures/binomialtree.ml dataStructures/largeArray.ml dataStructures/memoryManagement.ml dataStructures/longString.ml dataStructures/heap.ml dataStructures/safeHeap.ml \
 		dataStructures/tools.ml dataStructures/cache.ml main/parameter.ml dataStructures/mapExt.ml dataStructures/valMap.ml dataStructures/dynamicArray.ml dataStructures/mods.ml dataStructures/random_tree.ml \
 		Error/debug.ml Error/ExceptionDefn.ml dataStructures/liftSet.ml \
 		grammar/ast.ml grammar/kappaParser.mly grammar/kappaLexer.mll \
@@ -38,7 +39,7 @@ all: native-code
 OCAMLCP = $(OCAMLBINPATH)ocamlcp
 OCAMLLEX = $(OCAMLBINPATH)ocamllex
 OCAMLYACC = $(OCAMLBINPATH)ocamlyacc
-OCAMLC = $(OCAMLBINPATH)ocamlc.opt 
+OCAMLC = $(OCAMLBINPATH)ocamlc
 OCAMLOPT = $(OCAMLBINPATH)ocamlopt.opt #-g -ccopt -g -ccopt -pg
 OCAMLDEP = $(OCAMLBINPATH)ocamldep
 CC = gcc

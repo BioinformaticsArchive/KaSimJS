@@ -1,3 +1,4 @@
+open JsComp
 (**
   * generic_branch_and_cup_solver.ml
   *
@@ -17,7 +18,7 @@
   * Copyright 2011 Institut National de Recherche en Informatique et   
   * en Automatique.  All rights reserved.  This file is distributed     
   * under the terms of the GNU Library General Public License *)
-
+open JsComp
 let log_steps = false
 
 module type Solver = 

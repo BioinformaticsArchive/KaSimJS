@@ -1,3 +1,4 @@
+open JsComp
 open LargeArray
 (**Heap with no fragmentation and an equality test for content*)
 

@@ -1,4 +1,5 @@
 {
+  open JsComp
  open Lexing
  open KappaParser
  open ExceptionDefn

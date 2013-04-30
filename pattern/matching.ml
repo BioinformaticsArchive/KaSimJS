@@ -1,3 +1,4 @@
+open JsComp
 open Graph
 open Mods
 open Tools

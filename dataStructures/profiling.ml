@@ -1,3 +1,4 @@
+open JsComp
 type t = (string,float) Hashtbl.t
 
 let create n = Hashtbl.create n

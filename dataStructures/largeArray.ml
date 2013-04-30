@@ -1,3 +1,4 @@
+open JsComp
 module type GenArray =
 	(sig
 		type 'a t

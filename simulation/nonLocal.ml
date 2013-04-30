@@ -1,3 +1,4 @@
+open JsComp
 (**Module that manages connectedness of injection images --for dot and plus operators*)
 open Mods
 open Graph

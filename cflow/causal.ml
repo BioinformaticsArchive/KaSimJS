@@ -1,3 +1,5 @@
+open JsComp
+open JsComp
 open Mods
 open Dynamics
 open Graph

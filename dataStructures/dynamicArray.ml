@@ -1,3 +1,4 @@
+open JsComp
 (**
   * dynamicarray.ml 
   *

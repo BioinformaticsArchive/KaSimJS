@@ -1,3 +1,4 @@
+open JsComp
 type t 
 val concat : ?sep:char -> string -> t -> t
 val print : t -> unit

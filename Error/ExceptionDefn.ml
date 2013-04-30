@@ -1,3 +1,4 @@
+open JsComp
 exception IntFound of int
 exception StringFound of string
 exception MapFound of (int Mods.IntMap.t)

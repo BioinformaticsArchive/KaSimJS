@@ -1,3 +1,4 @@
+open JsComp
 module InjSet = Set.Make (Mods.Injection)
 
 type t = {mutable injs : InjSet.t}

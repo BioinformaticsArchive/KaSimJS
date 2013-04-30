@@ -1,4 +1,6 @@
+open JsComp
 (*Expert mode values*)
+open JsComp
 let interrupt_on_exception = false 
 let defaultExtArraySize = ref 5
 let defaultGraphSize = ref 5

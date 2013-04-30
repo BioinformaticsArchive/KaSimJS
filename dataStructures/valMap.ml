@@ -1,3 +1,4 @@
+open JsComp
 module type Content =
   sig
     type t

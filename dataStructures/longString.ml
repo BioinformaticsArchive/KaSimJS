@@ -1,3 +1,5 @@
+open JsComp
+open JsComp
 type t = char list
 
 let empty:t = []

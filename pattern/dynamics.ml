@@ -1,3 +1,4 @@
+open JsComp
 open Mods
 open Tools
 open ExceptionDefn

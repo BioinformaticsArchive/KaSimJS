@@ -1,3 +1,4 @@
+open JsComp
 type alg_expr = 
 		MULT of alg_expr * alg_expr * Tools.pos
 	| SUM of alg_expr * alg_expr * Tools.pos

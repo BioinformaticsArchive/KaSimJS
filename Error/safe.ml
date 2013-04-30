@@ -1,3 +1,5 @@
+open JsComp
+open JsComp
 open State
 open Random_tree
 open Graph

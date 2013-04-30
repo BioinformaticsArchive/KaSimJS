@@ -1,3 +1,5 @@
+open JsComp
+open JsComp
 module StringMap = MapExt.Make (struct type t = string let compare = compare end)   
 module IntMap = MapExt.Make (struct type t = int let compare = compare end)
 module IntSet = Set.Make (struct type t = int let compare = compare end)

@@ -1,7 +1,9 @@
+open JsComp
 open Tools
 open Mods
 open State
 open Random_tree
+open JsComp
 
 let version = "3.3-240413"
 

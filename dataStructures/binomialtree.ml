@@ -1,3 +1,4 @@
+open JsComp
 (**
   * binomialtree.ml 
   *

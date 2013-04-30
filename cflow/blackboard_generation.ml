@@ -1,3 +1,4 @@
+open JsComp
 (**
   * cflow_handler.ml
   *
@@ -17,7 +18,7 @@
   * Copyright 2011,2012 Institut National de Recherche en Informatique et   
   * en Automatique.  All rights reserved.  This file is distributed     
   * under the terms of the GNU Library General Public License *)
-
+open JsComp
 module type PreBlackboard = 
 sig 
   module A:LargeArray.GenArray

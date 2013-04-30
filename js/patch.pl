@@ -17,7 +17,7 @@ find(
 
 foreach my $file (@files) {
 
-    if ($file =~ /JsComp.ml/) {
+    if ($file =~ /jsComp.ml/) {
         next;
     }
 

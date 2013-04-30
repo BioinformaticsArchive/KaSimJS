@@ -1,3 +1,4 @@
+open JsComp
 (**
   * compression_main.ml 
   *
@@ -17,7 +18,7 @@
   * Copyright 2011 Institut National de Recherche en Informatique et   
   * en Automatique.  All rights reserved.  This file is distributed     
   * under the terms of the GNU Library General Public License *)
-
+open JsComp
 module D = Dag.Dag 
 
 let log_step = true

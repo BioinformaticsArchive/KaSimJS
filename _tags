@@ -1,0 +1,4 @@
+<cflow> or <Error> or <js> or <main> or <siteGraphs> or <dataStructures> or <grammar> or <models> or <pattern> or <simulation> : include
+<**/*.ml>: package(js_of_ocaml), package(js_of_ocaml.syntax), syntax(camlp4o)
+<**/*.byte>:  package(js_of_ocaml)
+
