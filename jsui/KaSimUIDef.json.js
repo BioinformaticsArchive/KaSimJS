@@ -1,4 +1,4 @@
-﻿{
+﻿jsonCallback({
     "name": "KaSim", 
     "messageFormat": "1", 
     "simulatorURL": "https://raw.github.com/jkrivine/KaSim/master/KaSim.js",
@@ -8,4 +8,4 @@
     "keywords": ["init", "obs", "agent"],
     "symbols": ["%", "~", "\\?", "!", ",", "->"],
     "delimitors": []
-}
+});
