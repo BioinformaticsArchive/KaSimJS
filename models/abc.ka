@@ -33,4 +33,3 @@
 %init: 'n_a' A()
 %init: 'n_b' B()
 %init: 'n_c' C()
-
