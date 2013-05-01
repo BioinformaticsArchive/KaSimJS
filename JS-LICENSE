@@ -1,0 +1,2 @@
+This is a JS port of KaSim ( kappalanguage.org ). It is distributed under the same license than KaSim.
+It uses js_of_ocaml ( http://ocsigen.org/js_of_ocaml/  ) and redistributes its runtime according to its license.
