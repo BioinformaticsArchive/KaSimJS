@@ -13,7 +13,13 @@ let message_back =
     let l = split_space s in
     match l with 
     | "#"::"time"::l ->
-      array_of_list l 
+      array_of_list (List.map 
+		       (fun s -> 
+			 let n = String.length s in
+			 let buf = String.create (n - 2) in
+			 String.blit s 1 buf 0 (n - 2);
+			 buf
+		       ) l) 
     | _ -> assert false in
   let species_sent = ref false in
   let empty_array = jsnew Js.array_empty() in
@@ -26,13 +32,13 @@ let message_back =
 	  else (species_sent := true;  a) in
 	let l = split_space s in
 	match l with 
-	  time :: spec -> assert (String.length time > 0);
+	  "" :: time :: spec ->
 	    let open Js.Unsafe in
 	    let msg = 
-	       obj [|("time", inject time);
-		     ("newSpec", inject species_array);
-		     ("newData", inject (array_of_list spec));
-		     ("isComplete", inject false) |] in
+	      obj [|("time", inject time);
+		    ("newSpec", inject species_array);
+		    ("newData", inject (array_of_list spec));
+		    ("isComplete", inject false)|] in
 	   ignore(fun_call  (variable "processMessageCallback") [|msg|])
-  
+	| _ -> assert false
 let _ = line_callback "output" message_back
