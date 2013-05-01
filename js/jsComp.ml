@@ -45,8 +45,10 @@ end
 
 let argv = ref [||]
 
+let eventsNum = Js.to_string (Js.Unsafe.variable("numEventsStr"))
+
 let _ = 
-  argv := [|"kasimJS" ; "-i"; "input" ; "-e"; "100000" ; "-p" ;"5000" ; "-o"; "output" |]
+  argv := [|"kasimJS" ; "-i"; "input" ; "-e"; eventsNum ; "-p" ;"100" ; "-o"; "output" |]
 
 module Arg = struct 
   include Arg

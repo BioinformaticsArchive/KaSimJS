@@ -268,9 +268,3 @@ let _ =  (Js.Unsafe.variable "caml_callbacks")##write_file_content_ <- write_fil
 let _ =  (Js.Unsafe.variable "caml_callbacks")##list_files_ <- list_files
 
 
-let _ = write_file_content (Js.string "input") (Js.string "%agent: a()\n\
-%agent: b(y~u~p)\n\
-\n\
- -> a() @1\n\
-\n\
-%obs: 'a phos' a()" )
