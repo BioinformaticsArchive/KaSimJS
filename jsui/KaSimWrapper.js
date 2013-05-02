@@ -1,4 +1,4 @@
-﻿var processMessageCallback = null;
+var processMessageCallback = null;
 var inputFile = null;
 var numEventsStr = null;
 
@@ -14,7 +14,7 @@ var Simulator = (function () {
                 inputFile = progStrPar;
                 numEventsStr = eventsPar.toString();
 
-                importScripts("../KaSim/KaSim.js");
+                importScripts("https://raw.github.com/NicolasOury/KaSimJS/master/KaSim.js");
 
                 // need to provide the final "isComplete" callback here:
                 var message = { isComplete: true };
