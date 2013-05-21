@@ -45,10 +45,16 @@ end
 
 let argv = ref [||]
 
-let eventsNum = Js.to_string (Js.Unsafe.variable("numEventsStr"))
-
-let _ = 
-  argv := [|"kasimJS" ; "-i"; "input" ; "-e"; eventsNum ; "-p" ;"100" ; "-o"; "output" ; "--implicit-signature"|]
+let _ =
+  argv :=
+    
+    let open Js.Unsafe in
+    let basicArgsStr = "KaSimJS -i input -o output" in
+    let customArgsStr = Js.to_string (Js.Unsafe.variable "customArgs") in
+    let argsStr = basicArgsStr ^ " " ^ customArgsStr in
+    let argsLst = Regexp.split (Regexp.regexp " ") argsStr in
+    let argsNELst = List.filter (fun s -> s <> "") argsLst in
+    Array.of_list argsNELst
 
 module Arg = struct 
   include Arg

@@ -47,5 +47,6 @@ let message_back =
 let _ = line_callback "output" message_back
 
 
+let _ = Js.Unsafe.fun_call (Js.Unsafe.variable "setFileContentFun") [|(Js.Unsafe.variable "caml_callbacks.file_content")|]
 
 let _ = write_file_content (Js.string "input") (Js.Unsafe.variable "inputFile")
