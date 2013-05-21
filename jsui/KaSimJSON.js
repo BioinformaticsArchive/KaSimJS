@@ -1,6 +1,6 @@
 ﻿jsonCallback(
 {
-    "name": "KaSimJS Local",
+    "name": "KaSimJS",
     "messageFormat": "1",
     "runInWorker": true,
     "useJSONP": true,
