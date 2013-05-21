@@ -7,9 +7,8 @@
 # \n\
 # The following example model is copied from the KaSim repo. \n\
 # Command line options (not involving file i/o) are specified using the %simulate directive as shown below. \n\
-%simulate: -e 500000 -p 100  \n\
 %simulate: -e 50000 -p 100  \n\
-####### TEMPLATE MODEL AS DESCRIBED IN THE MANUAL#############\n\
+\n\
 #### Signatures \n\
 %agent: A(x,c) # Declaration of agent A \n\
 %agent: B(x) # Declaration of B \n\
