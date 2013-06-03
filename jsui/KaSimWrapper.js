@@ -34,7 +34,7 @@ var Simulator = (function () {
 
 
                 // invoke js simulator.
-                importScripts("http://localhost:7065/Scripts/KaSim/KaSim.js");
+                importScripts("https://raw.github.com/NicolasOury/KaSimJS/master/KaSim.js");
 
                 // now done - need to provide the final "isComplete" callback here.
                 // note that any errors result in exceptions, which are handled below.
