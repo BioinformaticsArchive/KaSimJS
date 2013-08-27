@@ -34,7 +34,7 @@ var Simulator = (function () {
 
 
                 // invoke js simulator.
-                importScripts("https://raw.github.com/NicolasOury/KaSimJS/master/KaSim.js");
+                importScripts("http://mdp-fileserver2.appspot.com/proxy?f=KaSim.js");
 
                 // now done - need to provide the final "isComplete" callback here.
                 // note that any errors result in exceptions, which are handled below.

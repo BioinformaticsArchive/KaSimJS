@@ -4,10 +4,10 @@
     "messageFormat": "1",
     "runInWorker": true,
     "useJSONP": true,
-    "simulatorURL": "https://raw.github.com/NicolasOury/KaSimJS/master/jsui/KaSimWrapper.js",
-    "defaultModelURL": "https://raw.github.com/NicolasOury/KaSimJS/master/jsui/KaSimEx.js",
+    "simulatorURL": "http://mdp-fileserver2.appspot.com/proxy?f=KaSimWrapper.js",
+    "defaultModelURL": "http://mdp-fileserver2.appspot.com/proxy?f=KaSimEx.js",
     "exampleModels":
-    { "ABC": "https://raw.github.com/NicolasOury/KaSimJS/master/jsui/KaSimEx.js" },
+    { "ABC": "http://mdp-fileserver2.appspot.com/proxy?f=KaSimEx.js" },
     "keywords": ["init", "obs", "agent", "simulate"],
     "symbols": ["%", "~", "\\?", "!", ",", "->"],
     "delimitors": []
